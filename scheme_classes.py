@@ -33,8 +33,9 @@ class Frame:
     def lookup(self, symbol):
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
         # BEGIN PROBLEM 1
+        value = self.bindings.get(symbol)
         if value is not None:
-            return self.bindings.get(symbol)
+            return value
         # END PROBLEM 1
         raise SchemeError('unknown identifier: {0}'.format(symbol))
 
