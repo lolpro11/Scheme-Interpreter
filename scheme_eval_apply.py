@@ -90,7 +90,15 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    return scheme_eval(expressions.first, env) # replace this with lines of your own code
+    # Check if there actually is an expression in the Scheme procedure
+    if (expressions == nil):
+        return None
+    # Evaluate each expression in order, then get the next expression
+    while (expressions.second != nil):
+        scheme_eval(expressions.first, env)
+        expressions = expressions.second
+    # Return the value after evaluating the last remaining expression
+    return scheme_eval(expressions.first, env)
     # END PROBLEM 6
 
 
