@@ -44,13 +44,22 @@ def scheme_apply(procedure, args, env):
        assert False, "Not a Frame: {}".format(env)
     if isinstance(procedure, BuiltinProcedure):
         # BEGIN PROBLEM 2
-        py_args = [args.first, args.rest]
+        # Initialize list of parameters
+        py_args = []
+        # Check if parameters exist
+        if (args != nil):
+            # Empty args into the list of parameters
+            while (args != nil):
+                py_args.append(args.first)
+                args = args.rest
+        # Add the current environment if necessary for the given Scheme procedure
         if (procedure.need_env):
             py_args.append(env)
         # END PROBLEM 2
         try:
             # BEGIN PROBLEM 2
-            procedure.py_func(*py_args)
+            # Pass in each parameter to the corresponding built-in Python function
+            return procedure.py_func(*py_args)
             # END PROBLEM 2
         except TypeError as err:
             raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
