@@ -1,6 +1,8 @@
 import numbers
 
 from scheme_classes import *
+from pair import nil
+from pair import Pair
 
 #################
 # Type Checking #

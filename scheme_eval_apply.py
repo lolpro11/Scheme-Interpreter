@@ -48,9 +48,9 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         """ If the element passed in is a pair, the first index is the operation and the rest are the arguments. """
         if isinstance(expr, Pair):
             """ Recursively call the function on the rest of the Pair """
-            args = expr.rest.map(scheme_eval)
+            args = rest.map((lambda x: scheme_eval(x, env))
             """ Actually apply the operation to all the extracted args """
-            return(scheme_apply(expr.first, args, Frame()))
+            return(scheme_apply(first, args, Frame()))
         else:
             raise TypeError(str(expr) + 'is not self-evaluating or a call expression')
         # END PROBLEM 3
@@ -66,12 +66,10 @@ def scheme_apply(procedure, args, env):
         # BEGIN PROBLEM 2
         # Initialize list of parameters
         py_args = []
-        # Check if parameters exist
-        if (args != nil):
-            # Empty args into the list of parameters
-            while (args != nil):
-                py_args.append(args.first)
-                args = args.rest
+        # Empty args into the list of parameters
+        while (args.rest != nil):
+            py_args.append(args.first)
+            args = args.rest
         # Add the current environment if necessary for the given Scheme procedure
         if (procedure.need_env):
             py_args.append(env)
