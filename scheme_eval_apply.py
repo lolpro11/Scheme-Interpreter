@@ -45,7 +45,7 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         (operator operand operand...)
         """
 
-        """ operator evaluates to itself. """
+        """ operator evaluates to itself. Looks up first in env. """
         procedure = scheme_eval(first, env)
         """ evaluate operands recursively """
         args = rest.map((lambda x: scheme_eval(x, env)))

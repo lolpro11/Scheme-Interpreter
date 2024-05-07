@@ -3,7 +3,6 @@
 import math
 import operator
 
-from scheme_reader import *
 from scheme_eval_apply import *
 from scheme_utils import *
 

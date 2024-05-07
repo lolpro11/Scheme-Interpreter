@@ -30,13 +30,29 @@ def do_define_form(expressions, env):
     >>> scheme_eval(read_line("(f 3)"), env)
     5
     """
-    validate_form(expressions, 2) # Checks that expressions is a list of length at least 2
-    signature = expressions.first
+
+    from scheme_eval_apply import scheme_eval
+
+    """ The expression should be coming in as a Pair object."""
+    try:
+        validate_form(expressions, 2) # Checks that expressions is a list of length at least 2
+        signature = expressions.first
+        value = expressions.rest.first
+    except Exception:
+        pass
+
+    """ If the signature is a symbol... """
     if scheme_symbolp(signature):
         # assigning a name to a value e.g. (define x (+ 1 2))
         validate_form(expressions, 2, 2) # Checks that expressions is a list of length exactly 2
         # BEGIN PROBLEM 4
-        "*** YOUR CODE HERE ***"
+        """ 
+        Author: Arshmeet Kaur
+        Define statement. 
+        1. Evaluate second operand to obtain value.
+        2. Bind first operand (symbol) to that value."""
+        result = scheme_eval(value, env)
+        env.define(signature, result) # bind first operand to that value
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
         # defining a named procedure e.g. (define (f x y) (+ x y))
