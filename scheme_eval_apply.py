@@ -1,5 +1,6 @@
 import sys
 
+from operator import add, sub
 from pair import *
 from scheme_utils import *
 from ucb import main, trace
@@ -30,6 +31,7 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     # if it's not a well-formed list (Pair instance), raise a scheme error
     if not scheme_listp(expr):
         raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
+
     # if it is well formed, we can get the operation from the first element in the pair
     first, rest = expr.first, expr.rest
     # handles special forms
@@ -37,19 +39,22 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        "*** YOUR CODE HERE ***"
         """ 
         Arshmeet Kaur
         The following code evaluates a call expression.
         (operator operand operand...)
-        1. The operator should evaluate to an instance of Procedure.
         """
-        if isinstance(expr.first, Procedure):
 
+        """ If the element passed in is a pair, the first index is the operation and the rest are the arguments. """
+        if isinstance(expr, Pair):
+            """ Recursively call the function on the rest of the Pair """
+            args = expr.rest.map(scheme_eval)
+            """ Actually apply the operation to all the extracted args """
+            return(scheme_apply(expr.first, args, Frame()))
         else:
-            # if it's not a procedure, raise an error.
-            raise SchemeError('{0} is not a Procedure.'.format(str(expr.first)))
+            raise TypeError(str(expr) + 'is not self-evaluating or a call expression')
         # END PROBLEM 3
+
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
