@@ -47,13 +47,11 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         """
 
         """ If the element passed in is a pair, the first index is the operation and the rest are the arguments. """
-        if isinstance(expr, Pair):
-            """ Recursively call the function on the rest of the Pair """
-            args = rest.map((lambda x: scheme_eval(x, env)))
-            """ Actually apply the operation to all the extracted args """
-            return(scheme_apply(first, args, env))
-        else:
-            raise TypeError(str(expr) + 'is not self-evaluating or a call expression')
+        """ Recursively call the function on the rest of the Pair """
+        operator = scheme_eval(first, env)
+        args = rest.map((lambda x: scheme_eval(x, env)))
+        """ Actually apply the operation to all the extracted args """
+        return(scheme_apply(operator, args, env))
         #END PROBLEM 3
 
 
