@@ -12,6 +12,7 @@ class SchemeError(Exception):
 class Frame:
     """An environment frame binds Scheme symbols to Scheme values."""
 
+    "*** YOUR CODE HERE ***"
     def __init__(self, parent):
         """An empty frame with parent frame PARENT (which may be None)."""
         self.bindings = {}
@@ -26,7 +27,7 @@ class Frame:
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
         # BEGIN PROBLEM 1
-        self.bindings.update(symbol=value)
+        self.bindings.update(symbol= value)
         # END PROBLEM 1
 
     def lookup(self, symbol):

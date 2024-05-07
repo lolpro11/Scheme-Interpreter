@@ -1,5 +1,6 @@
 import sys
 
+from operator import add, sub
 from pair import *
 from scheme_utils import *
 from ucb import main, trace
@@ -19,22 +20,41 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     >>> scheme_eval(expr, create_global_frame())
     4
     """
-    # Evaluate atoms
+
+    # handling the atomic expressions (containing only one element)
     if scheme_symbolp(expr):
         return env.lookup(expr)
-    elif self_evaluating(expr):
+    elif self_evaluating(expr): # covers boolean, number, symbol, null, or string
         return expr
 
     # All non-atomic expressions are lists (combinations)
+    # if it's not a well-formed list (Pair instance), raise a scheme error
     if not scheme_listp(expr):
         raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
+
+    # if it is well formed, we can get the operation from the first element in the pair
     first, rest = expr.first, expr.rest
+    # handles special forms
     if scheme_symbolp(first) and first in scheme_forms.SPECIAL_FORMS:
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        "*** YOUR CODE HERE ***"
+        """ 
+        Arshmeet Kaur
+        The following code evaluates a call expression.
+        (operator operand operand...)
+        """
+
+        """ If the element passed in is a pair, the first index is the operation and the rest are the arguments. """
+        if isinstance(expr, Pair):
+            """ Recursively call the function on the rest of the Pair """
+            args = expr.rest.map(scheme_eval)
+            """ Actually apply the operation to all the extracted args """
+            return(scheme_apply(expr.first, args, Frame()))
+        else:
+            raise TypeError(str(expr) + 'is not self-evaluating or a call expression')
         # END PROBLEM 3
+
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
