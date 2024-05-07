@@ -1,10 +1,9 @@
 import sys
 
-from operator import add, sub
 from pair import *
 from scheme_utils import *
 from ucb import main, trace
-from scheme_classes import *
+
 import scheme_forms
 
 ##############

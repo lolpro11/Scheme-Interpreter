@@ -1,11 +1,15 @@
 """This module implements the built-in procedures of the Scheme language."""
 
 import math
+import numbers
 import operator
+import sys
 
+from pair import Pair, nil, repl_str
+from scheme_reader import *
 from scheme_eval_apply import *
+from scheme_classes import *
 from scheme_utils import *
-
 
 #######################
 # Built-In Procedures #

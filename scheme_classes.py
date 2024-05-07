@@ -1,6 +1,4 @@
 import builtins
-import scheme_builtins
-
 from pair import *
 
 class SchemeError(Exception):
