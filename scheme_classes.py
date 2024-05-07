@@ -65,7 +65,7 @@ class Frame:
 ##############
 
 class Procedure:
-    """The the base class for all Procedure classes."""
+    """The the base class for all Procedure classes. Not implemented"""
 
 class BuiltinProcedure(Procedure):
     """A Scheme procedure defined as a Python function."""

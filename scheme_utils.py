@@ -3,6 +3,9 @@ import numbers
 from scheme_classes import *
 from pair import nil
 from pair import Pair
+from pair import *
+
+
 
 #################
 # Type Checking #

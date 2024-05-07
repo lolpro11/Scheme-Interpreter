@@ -4,6 +4,7 @@ from operator import add, sub
 from pair import *
 from scheme_utils import *
 from ucb import main, trace
+from scheme_classes import *
 
 import scheme_forms
 
@@ -48,9 +49,9 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         """ If the element passed in is a pair, the first index is the operation and the rest are the arguments. """
         if isinstance(expr, Pair):
             """ Recursively call the function on the rest of the Pair """
-            args = rest.map((lambda x: scheme_eval(x, env))
+            args = rest.map((lambda x: scheme_eval(x, env)))
             """ Actually apply the operation to all the extracted args """
-            return(scheme_apply(first, args, Frame()))
+            return(scheme_apply(first, args, env))
         else:
             raise TypeError(str(expr) + 'is not self-evaluating or a call expression')
         # END PROBLEM 3

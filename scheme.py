@@ -27,6 +27,7 @@ def read_eval_print_loop(next_line, env, interactive=False, quiet=False,
     while True:
         try:
             src = next_line()
+            print(src)
             while src.more_on_line():
                 expression = scheme_read(src)
                 result = scheme_eval(expression, env)
