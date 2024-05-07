@@ -1,4 +1,5 @@
 import builtins
+import scheme_builtins
 
 from pair import *
 
@@ -27,7 +28,7 @@ class Frame:
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
         # BEGIN PROBLEM 1
-        self.bindings.update(symbol= value)
+        self.bindings.update({symbol: value})
         # END PROBLEM 1
 
     def lookup(self, symbol):
