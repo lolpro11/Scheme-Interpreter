@@ -5,7 +5,6 @@ from pair import *
 from scheme_utils import *
 from ucb import main, trace
 from scheme_classes import *
-
 import scheme_forms
 
 ##############
@@ -14,7 +13,6 @@ import scheme_forms
 
 def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in Frame ENV.
-
     >>> expr = read_line('(+ 2 2)')
     >>> expr
     Pair('+', Pair(2, Pair(2, nil)))
@@ -22,35 +20,36 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     4
     """
 
-    # handling the atomic expressions (containing only one element)
+    """ if: Handles an expression.
+     elif: covers  boolean, number, symbol, null, or string (self-evaluating) """
     if scheme_symbolp(expr):
         return env.lookup(expr)
-    elif self_evaluating(expr): # covers boolean, number, symbol, null, or string
+    elif self_evaluating(expr):
         return expr
 
-    # All non-atomic expressions are lists (combinations)
-    # if it's not a well-formed list (Pair instance), raise a scheme error
+    """ All non-self-evaluating expressions are Pairs.
+    This is to check if the list is well formed"""
     if not scheme_listp(expr):
         raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
 
-    # if it is well formed, we can get the operation from the first element in the pair
+    """ Extract the operator and the operands. """
     first, rest = expr.first, expr.rest
-    # handles special forms
+    """ if the operator is a special form, apply it to other args. """
     if scheme_symbolp(first) and first in scheme_forms.SPECIAL_FORMS:
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
         """ 
-        Arshmeet Kaur
+        Author: Arshmeet Kaur
         The following code evaluates a call expression.
         (operator operand operand...)
         """
 
-        """ If the element passed in is a pair, the first index is the operation and the rest are the arguments. """
-        """ Recursively call the function on the rest of the Pair """
+        """ operator evaluates to itself. """
         procedure = scheme_eval(first, env)
+        """ evaluate operands recursively """
         args = rest.map((lambda x: scheme_eval(x, env)))
-        """ Actually apply the operation to all the extracted args """
+        """ apply operator to operands. """
         return(scheme_apply(procedure, args, env))
         #END PROBLEM 3
 
@@ -67,13 +66,16 @@ def scheme_apply(procedure, args, env):
         # Initialize list of parameters
         py_args = []
 
-        """ Arshmeet Kaur: fixed this loop. """
-        # Empty args into the list of parameters
-        while True:
-            py_args.append(args.first)
-            if (args.rest == nil):
-                break
-            args = args.rest
+        """ Arshmeet: fixed this loop. """
+        try:
+            while True:
+                py_args.append(args.first)
+                if (args.rest == nil):
+                    break
+                args = args.rest
+        except AttributeError:
+            """ Deal with when 0 args are passed in"""
+            pass
 
         # Add the current environment if necessary for the given Scheme procedure
         if (procedure.need_env):
