@@ -48,10 +48,10 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
 
         """ If the element passed in is a pair, the first index is the operation and the rest are the arguments. """
         """ Recursively call the function on the rest of the Pair """
-        operator = scheme_eval(first, env)
+        procedure = scheme_eval(first, env)
         args = rest.map((lambda x: scheme_eval(x, env)))
         """ Actually apply the operation to all the extracted args """
-        return(scheme_apply(operator, args, env))
+        return(scheme_apply(procedure, args, env))
         #END PROBLEM 3
 
 
@@ -63,12 +63,18 @@ def scheme_apply(procedure, args, env):
        assert False, "Not a Frame: {}".format(env)
     if isinstance(procedure, BuiltinProcedure):
         # BEGIN PROBLEM 2
+        """ Authors: Lukas and Arshmeet """
         # Initialize list of parameters
         py_args = []
+
+        """ Arshmeet Kaur: fixed this loop. """
         # Empty args into the list of parameters
-        while (args.rest != nil):
+        while True:
             py_args.append(args.first)
+            if (args.rest == nil):
+                break
             args = args.rest
+
         # Add the current environment if necessary for the given Scheme procedure
         if (procedure.need_env):
             py_args.append(env)
