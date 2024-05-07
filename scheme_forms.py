@@ -53,6 +53,7 @@ def do_define_form(expressions, env):
         2. Bind first operand (symbol) to that value."""
         result = scheme_eval(value, env)
         env.define(signature, result) # bind first operand to that value
+        return signature
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
         # defining a named procedure e.g. (define (f x y) (+ x y))
