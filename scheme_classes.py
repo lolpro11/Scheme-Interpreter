@@ -36,7 +36,7 @@ class Frame:
         if value is not None:
             return value
         elif self.parent is not None:
-            return lookup(self.parent, symbol)
+            return self.parent.lookup(symbol)
         # END PROBLEM 1
         raise SchemeError('unknown identifier: {0}'.format(symbol))
 
