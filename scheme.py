@@ -1,18 +1,12 @@
 """A Scheme interpreter and its read-eval-print loop."""
 
 import sys
-import os
 
 sys.path.append("scheme_reader")
 
-from scheme_classes import *
-from scheme_forms import *
-from scheme_eval_apply import *
 from scheme_builtins import *
 from scheme_reader import *
-from ucb import main, trace
-
-
+from ucb import main
 
 ################
 # Input/Output #

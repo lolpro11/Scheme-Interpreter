@@ -54,7 +54,7 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
             return(scheme_apply(first, args, env))
         else:
             raise TypeError(str(expr) + 'is not self-evaluating or a call expression')
-        # END PROBLEM 3
+        #END PROBLEM 3
 
 
 def scheme_apply(procedure, args, env):
@@ -156,19 +156,6 @@ def optimize_tail_calls(unoptimized_scheme_eval):
         "*** YOUR CODE HERE ***"
         # END OPTIONAL PROBLEM 1
     return optimized_eval
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ################################################################
 # Uncomment the following line to apply tail call optimization #

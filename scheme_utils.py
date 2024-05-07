@@ -5,8 +5,6 @@ from pair import nil
 from pair import Pair
 from pair import *
 
-
-
 #################
 # Type Checking #
 #################
