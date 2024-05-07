@@ -19,21 +19,36 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     >>> scheme_eval(expr, create_global_frame())
     4
     """
-    # Evaluate atoms
+
+    # handling the atomic expressions (containing only one element)
     if scheme_symbolp(expr):
         return env.lookup(expr)
-    elif self_evaluating(expr):
+    elif self_evaluating(expr): # covers boolean, number, symbol, null, or string
         return expr
 
     # All non-atomic expressions are lists (combinations)
+    # if it's not a well-formed list (Pair instance), raise a scheme error
     if not scheme_listp(expr):
         raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
+    # if it is well formed, we can get the operation from the first element in the pair
     first, rest = expr.first, expr.rest
+    # handles special forms
     if scheme_symbolp(first) and first in scheme_forms.SPECIAL_FORMS:
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
         "*** YOUR CODE HERE ***"
+        """ 
+        Arshmeet Kaur
+        The following code evaluates a call expression.
+        (operator operand operand...)
+        1. The operator should evaluate to an instance of Procedure.
+        """
+        if isinstance(expr.first, Procedure):
+
+        else:
+            # if it's not a procedure, raise an error.
+            raise SchemeError('{0} is not a Procedure.'.format(str(expr.first)))
         # END PROBLEM 3
 
 def scheme_apply(procedure, args, env):
