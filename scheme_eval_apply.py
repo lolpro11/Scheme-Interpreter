@@ -118,9 +118,9 @@ def eval_all(expressions, env):
     if (expressions == nil):
         return None
     # Evaluate each expression in order, then get the next expression
-    while (expressions.second != nil):
+    while (expressions.rest != nil):
         scheme_eval(expressions.first, env)
-        expressions = expressions.second
+        expressions = expressions.rest
     # Return the value after evaluating the last remaining expression
     return scheme_eval(expressions.first, env)
     # END PROBLEM 6
