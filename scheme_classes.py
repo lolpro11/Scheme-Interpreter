@@ -55,7 +55,41 @@ class Frame:
         if len(formals) != len(vals):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
-        "*** YOUR CODE HERE ***"
+        """ Author: Arshmeet Kaur 
+        formals are the parameters, specified in the function definition/signature.
+        vals are the arguments, specified when the user puts in the function. 
+        The role of this function is to create a new child frame when a function is called and add the bindings."""
+
+        # new frame with parent == self
+        child_frame = Frame(self)
+
+        # extract the parameters and arguments
+        parameters = []
+        arguments = []
+
+        # dump the parameters into a list.
+        # handle case where there are no formal parameters
+        # if nothing is being bound to anything else, no need to fill parameters or arguments
+        if len(formals) == 0:
+            pass # both lists stay empty
+        else:
+            while (True):
+                parameters.append(formals.first)
+                if formals.rest == nil:
+                    break
+                formals = formals.rest
+
+            while(True):
+                arguments.append(vals.first)
+                if vals.rest == nil:
+                    break
+                vals = vals.rest
+
+            # use to add symbol and value
+            for parameter, argument in zip(parameters, arguments):
+                # bind parameters to arguments
+                child_frame.define(parameter, argument)
+
         # END PROBLEM 8
 
 ##############
