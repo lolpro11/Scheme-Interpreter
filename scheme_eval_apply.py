@@ -89,7 +89,12 @@ def scheme_apply(procedure, args, env):
             raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
-        "*** YOUR CODE HERE ***"
+        """ Author: Mike Beitner 
+         If a lambda procedure, a child frame of the current environment is made.
+         The body args are eval_all-ed"""
+        new_frame = env.make_child_frame(procedure.params, args)
+        result = eval_all(procedure.body, new_frame) # call eval_all with new frame
+        return result
         # END PROBLEM 9
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
