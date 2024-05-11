@@ -65,7 +65,7 @@ def do_define_form(expressions, env):
         # Handle multi-expression bodies
         if len(body) > 1:
             # Constructing equivalent lambda expression
-            lambda_exp = Pair(Symbol('lambda'), Pair(formals, body))
+            lambda_exp = Pair(formals, Pair(body, nil))
             # Calling do_define_form on the constructed lambda expression
             return do_define_form(Pair(name, Pair(lambda_exp, nil)), env)
         else:
@@ -85,7 +85,7 @@ def do_quote_form(expressions, env):
     >>> do_quote_form(read_line("((+ x 2))"), env) # evaluating (quote (+ x 2))
     Pair('+', Pair('x', Pair(2, nil)))
     """
-    validate_form(expressions, 1, 1)
+    validate_form(expressions, 1, 1);
     # BEGIN PROBLEM 5
     return expressions.first
     # END PROBLEM 5

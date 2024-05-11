@@ -92,7 +92,7 @@ def scheme_apply(procedure, args, env):
         """ Author: Mike Beitner 
          If a lambda procedure, a child frame of the current environment is made.
          The body args are eval_all-ed"""
-        new_frame = env.make_child_frame(procedure.params, args)
+        new_frame = env.make_child_frame(procedure.formals, args)
         result = eval_all(procedure.body, new_frame) # call eval_all with new frame
         return result
         # END PROBLEM 9

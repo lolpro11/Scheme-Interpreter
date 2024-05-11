@@ -75,13 +75,13 @@ class Frame:
         else:
             while (True):
                 parameters.append(formals.first)
-                if formals.rest == nil:
+                if formals.rest is nil:
                     break
                 formals = formals.rest
 
             while(True):
                 arguments.append(vals.first)
-                if vals.rest == nil:
+                if vals.rest is nil:
                     break
                 vals = vals.rest
 
@@ -89,6 +89,8 @@ class Frame:
             for parameter, argument in zip(parameters, arguments):
                 # bind parameters to arguments
                 child_frame.define(parameter, argument)
+
+        return child_frame
 
         # END PROBLEM 8
 
