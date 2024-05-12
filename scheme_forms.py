@@ -184,7 +184,12 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
-            "*** YOUR CODE HERE ***"
+            """Author: Lukas Hammett"""
+            # If there are no sub-expressions to evaluate, return the predicate value.
+            if (clause.rest == nil):
+                return test
+            # Otherwise, return the value of the last expression.
+            return eval_all(clause.rest, env)
             # END PROBLEM 13
         expressions = expressions.rest
 
