@@ -146,7 +146,15 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if expressions is nil:
+        return True
+    reader = expressions
+    while reader is not nil:
+        value = scheme_eval(reader.first, env, True if reader.rest is nil else False)
+        if is_scheme_false(value):
+            return value
+        reader = reader.rest
+    return value
     # END PROBLEM 12
 
 def do_or_form(expressions, env):
@@ -164,7 +172,15 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if expressions is nil:
+        return False
+    reader = expressions
+    while reader is not nil:
+        value = scheme_eval(reader.first, env, True if reader.rest is nil else False)
+        if is_scheme_true(value):
+            return value
+        reader = reader.rest
+    return False
     # END PROBLEM 12
 
 def do_cond_form(expressions, env):
