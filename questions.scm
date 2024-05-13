@@ -7,7 +7,10 @@
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 15
-  'replace-this-line
+  (cond ((null? s) '()) ; empty list if null
+        ((else (cons (cons (length (cdr s)) (car s)) ; if not empty, cons(create a pair) of length of rest of 
+                     ; list (cdr s) and the first element (car s)
+                     (enumerate (cdr s)))))) ; recursive; do it for the rest of the elements in s
   )
   ; END PROBLEM 15
 
