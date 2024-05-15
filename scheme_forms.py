@@ -59,7 +59,7 @@ def do_define_form(expressions, env):
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
         """Author: Cesar Salto"""
-       name = signature.first
+        name = signature.first
         formals = signature.rest
         body = expressions.rest
         # Handle multi-expression bodies
