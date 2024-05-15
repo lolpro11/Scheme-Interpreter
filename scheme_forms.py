@@ -59,20 +59,20 @@ def do_define_form(expressions, env):
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
         """Author: Cesar Salto"""
-        name = signature.first
+       name = signature.first
         formals = signature.rest
         body = expressions.rest
         # Handle multi-expression bodies
         if len(body) > 1:
             # Constructing equivalent lambda expression
             lambda_exp = Pair(formals, Pair(body, nil))
-            # Calling do_define_form on the constructed lambda expression
-            return do_define_form(Pair(name, Pair(lambda_exp, nil)), env)
+            # Calling do_lambda_form to create LambdaProcedure instance
+            proc = do_lambda_form(lambda_exp, env)
         else:
             # Create LambdaProcedure instance directly
             proc = LambdaProcedure(formals, body.first, env)
-            env.define(name, proc)
-            return name
+        env.define(name, proc)
+        return name        
         # END PROBLEM 10
     else:
         bad_signature = signature.first if isinstance(signature, Pair) else signature
@@ -273,10 +273,7 @@ def do_mu_form(expressions, env):
     # BEGIN PROBLEM 11
     """ Author: Cesar Salto """
     """Evaluate a mu form."""
-    validate_form(expressions, 2)
-    formals = expressions.first
-    validate_formals(formals)
-    return MuProcedure(formals, expressions.rest, env)
+    return MuProcedure(formals, expressions.rest)
     # END PROBLEM 11
 
 
