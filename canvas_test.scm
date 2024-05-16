@@ -75,4 +75,5 @@ tau
            (y (* x 10)))  ; this x refers to the global value of x, not 42
        (list x y))
 (list x y)
+(exit)
 
