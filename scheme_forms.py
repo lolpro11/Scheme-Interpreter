@@ -238,9 +238,7 @@ def make_let_frame(bindings, env):
         bindings = bindings.rest
     validate_formals(names)
     # END PROBLEM 14
-    return env.make_child_frame(names, vals)
-
-
+    return env.make_child_frame(names, values)
 
 def do_quasiquote_form(expressions, env):
     """Evaluate a quasiquote form with parameters EXPRESSIONS in
