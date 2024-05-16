@@ -80,3 +80,10 @@
 
 (define (zip pairs)
   'replace-this-line)
+
+; Canvas Tests
+(enumerate '(3 4 5 6))
+(enumerate '())
+(merge < '(1 4 6) '(2 5 8))
+(merge > '(6 4 1) '(8 5 2))
+(merge < '(1) '(2 3 5))
