@@ -231,14 +231,13 @@ def make_let_frame(bindings, env):
     # BEGIN PROBLEM 14
     "Author - Joshua Wong"
     while bindings is not nil:
-        binding = bindings.first
-        validate_form(binding, 2, 2)
-        names = Pair(binding.first, names)
-        values = Pair(scheme_eval(binding.rest.first, env), values)
+        validate_form(bindings.first, 2, 2)
+        names = Pair(bindings.first.first, names)
+        values = Pair(scheme_eval(bindings.first.rest.first, env), values)
         bindings = bindings.rest
     validate_formals(names)
     # END PROBLEM 14
-    return env.make_child_frame(names, vals)
+    return env.make_child_frame(names, values)
 
 
 
