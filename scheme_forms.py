@@ -227,13 +227,14 @@ def make_let_frame(bindings, env):
     and a Scheme expression."""
     if not scheme_listp(bindings):
         raise SchemeError('bad bindings list in let form')
-    names = vals = nil
+    names = values = nil
     # BEGIN PROBLEM 14
-    "Author - Cesar Salto"
-    while bindings:
-        validate_form(bindings.first, 2, 2)
-        names = Pair(bindings.first.first, names)
-        values = Pair(scheme_eval(bindings.first.rest.first, env, False), values)
+    "Author - Joshua Wong"
+    while bindings is not nil:
+        binding = bindings.first
+        validate_form(binding, 2, 2)
+        names = Pair(binding.first, names)
+        values = Pair(scheme_eval(binding.rest.first, env), values)
         bindings = bindings.rest
     validate_formals(names)
     # END PROBLEM 14
