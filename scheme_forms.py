@@ -66,13 +66,13 @@ def do_define_form(expressions, env):
         if len(body) > 1:
             # Constructing equivalent lambda expression
             lambda_exp = Pair(formals, Pair(body, nil))
-            # Calling do_define_form on the constructed lambda expression
-            return do_lambda_form(Pair(name, Pair(lambda_exp, nil)), env)
+            # Calling do_lambda_form to create LambdaProcedure instance
+            proc = do_lambda_form(lambda_exp, env)
         else:
             # Create LambdaProcedure instance directly
             proc = LambdaProcedure(formals, body.first, env)
-            env.define(name, proc)
-            return name
+        env.define(name, proc)
+        return name
         # END PROBLEM 10
     else:
         bad_signature = signature.first if isinstance(signature, Pair) else signature
@@ -229,15 +229,21 @@ def make_let_frame(bindings, env):
         raise SchemeError('bad bindings list in let form')
     names = vals = nil
     # BEGIN PROBLEM 14
-    "*** YOUR CODE HERE ***"
     "Author - Cesar Salto"
+    while bindings:
+        validate_form(bindings.first, 2, 2)
+        names = Pair(bindings.first.first, names)
+        values = Pair(scheme_eval(bindings.first.rest.first, env, False), values)
+        bindings = bindings.rest
+    validate_formals(names)
     # END PROBLEM 14
     return env.make_child_frame(names, vals)
+
+
 
 def do_quasiquote_form(expressions, env):
     """Evaluate a quasiquote form with parameters EXPRESSIONS in
     Frame ENV."""
-
     def quasiquote_item(val, env, level):
         """Evaluate Scheme expression VAL that is nested at depth LEVEL in
         a quasiquote form in Frame ENV."""
@@ -273,10 +279,7 @@ def do_mu_form(expressions, env):
     # BEGIN PROBLEM 11
     """ Author: Cesar Salto """
     """Evaluate a mu form."""
-    validate_form(expressions, 2)
-    formals = expressions.first
-    validate_formals(formals)
-    return MuProcedure(formals, expressions.rest, env)
+    return MuProcedure(formals, expressions.rest)
     # END PROBLEM 11
 
 
