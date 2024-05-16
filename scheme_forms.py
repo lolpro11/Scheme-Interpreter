@@ -62,16 +62,10 @@ def do_define_form(expressions, env):
         name = signature.first
         formals = signature.rest
         body = expressions.rest
-        # Handle multi-expression bodies
-        if len(body) > 1:
-            # Constructing equivalent lambda expression
-            lambda_exp = Pair(formals, Pair(body, nil))
-            # Calling do_lambda_form to create LambdaProcedure instance
-            proc = do_lambda_form(lambda_exp, env)
-        else:
-            # Create LambdaProcedure instance directly
-            proc = LambdaProcedure(formals, body.first, env)
+
+        proc = LambdaProcedure(formals, body, env)
         env.define(name, proc)
+
         return name
         # END PROBLEM 10
     else:
