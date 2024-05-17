@@ -79,6 +79,7 @@ def do_quote_form(expressions, env):
     >>> do_quote_form(read_line("((+ x 2))"), env) # evaluating (quote (+ x 2))
     Pair('+', Pair('x', Pair(2, nil)))
     """
+    # Author: Joshua Wong
     validate_form(expressions, 1, 1);
     # BEGIN PROBLEM 5
     return expressions.first
@@ -119,6 +120,7 @@ def do_if_form(expressions, env):
     >>> do_if_form(read_line("(#f (print 2) (print 3))"), env) # evaluating (if #f (print 2) (print 3))
     3
     """
+    # Author: Joshua Wong
     validate_form(expressions, 2, 3)
     if is_scheme_true(scheme_eval(expressions.first, env)):
         return scheme_eval(expressions.rest.first, env)
@@ -139,6 +141,7 @@ def do_and_form(expressions, env):
     4
     False
     """
+    # Author: Joshua Wong
     # BEGIN PROBLEM 12
     if expressions is nil:
         return True

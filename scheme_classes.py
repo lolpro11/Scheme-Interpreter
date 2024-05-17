@@ -31,6 +31,7 @@ class Frame:
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
+        # Author: Joshua Wong
         # BEGIN PROBLEM 1
         value = self.bindings.get(symbol)
         if value is not None:
