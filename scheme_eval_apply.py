@@ -58,7 +58,19 @@ def scheme_apply(procedure, args, env):
        assert False, "Not a Frame: {}".format(env)
     if isinstance(procedure, BuiltinProcedure):
         # BEGIN PROBLEM 2
-        """ Authors: Lukas and Arshmeet """
+        """ 
+        Authors: Lukas Hammett & Arshmeet Kaur
+        This part of scheme_apply deals with Scheme
+        procedures that can be implemented using a
+        built-in Python procedure.
+        
+        1. Take each Scheme argument in args and put
+           into a list of Python arguments py_args.
+        2. Add the current environment/frame if the
+           the procedure depends on it.
+        3. Pass in py_args to the built-in Python
+           function that implements the procedure.
+        """
         # Initialize list of parameters
         py_args = []
 
@@ -119,6 +131,18 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
+    """
+    Author: Lukas Hammett
+    eval_all, as stated in its docstring above, takes in
+    a list of Scheme expressions and the current environment,
+    and evaluates them in order, resulting in a final value
+    that is the value of the last expression.
+
+    1. If the expression list has no expressions, return None.
+    2. Evaluate each expression in order, calling scheme_eval,
+       until there is only one expression left.
+    3. Return the result of evaluating that one expression.
+    """
     # Check if there actually is an expression in the Scheme procedure
     if (expressions == nil):
         return None

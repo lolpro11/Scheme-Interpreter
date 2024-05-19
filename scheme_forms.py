@@ -199,7 +199,17 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
-            """Author: Lukas Hammett"""
+            """
+            Author: Lukas Hammett
+            This part of do_cond_form is the result of evaluating
+            the first clause in the cond form that returns true,
+            whether that is an 'else' clause or not.
+
+            1. Check if the clause contains its own sub-expressions.
+               If it does not, return the predicate value (#t or #f).
+            2. If it does, call eval_all with the sub-expressions
+               until a final value is achieved, and return that value.
+            """
             # If there are no sub-expressions to evaluate, return the predicate value.
             if (clause.rest == nil):
                 return test
