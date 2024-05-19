@@ -52,7 +52,7 @@ def do_define_form(expressions, env):
         1. Evaluate second operand to obtain value.
         2. Bind first operand (symbol) to that value."""
         result = scheme_eval(value, env)
-        env.define(signature, result) # bind first operand to that value
+        env.define(signature, result)
         return signature
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):

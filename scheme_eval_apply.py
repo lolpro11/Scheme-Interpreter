@@ -19,21 +19,15 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     4
     """
 
-    """ if: Handles an expression.
-     elif: covers  boolean, number, symbol, null, or string (self-evaluating) """
     if scheme_symbolp(expr):
         return env.lookup(expr)
     elif self_evaluating(expr):
         return expr
 
-    """ All non-self-evaluating expressions are Pairs.
-    This is to check if the list is well formed"""
     if not scheme_listp(expr):
         raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
 
-    """ Extract the operator and the operands. """
     first, rest = expr.first, expr.rest
-    """ if the operator is a special form, apply it to other args. """
     if scheme_symbolp(first) and first in scheme_forms.SPECIAL_FORMS:
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
@@ -42,13 +36,16 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         Author: Arshmeet Kaur
         The following code evaluates a call expression.
         (operator operand operand...)
+        
+        1. An operator evaluates to itself.
+        2. operands are either self-evaluating or call expressions that must be evaluated themselves.
+        3. operands and operator must be passed to scheme_apply to be evaluated.
         """
-
-        """ operator evaluates to itself. Looks up first in env. """
+        # look at the operator's bindings in the env
         procedure = scheme_eval(first, env)
-        """ evaluate operands recursively """
+        # map a lambda function to the operands which evaluates them in the current env recursively
         args = rest.map((lambda x: scheme_eval(x, env)))
-        """ apply operator to operands. """
+        # apply an operator to its operands
         return(scheme_apply(procedure, args, env))
         #END PROBLEM 3
 
