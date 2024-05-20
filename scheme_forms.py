@@ -63,9 +63,9 @@ def do_define_form(expressions, env):
         formals = signature.rest
         body = expressions.rest
 
-        # Create a new procedure object with the formal parameters, body, and the current environment
+        """Create a new procedure object with the formal parameters, body, and the current environment"""
         proc = LambdaProcedure(formals, body, env)
-        # Define the procedure in the current environment with the given name
+        """Define the procedure in the current environment with the given name"""
         env.define(name, proc)
 
         return name
@@ -240,7 +240,7 @@ def make_let_frame(bindings, env):
     # BEGIN PROBLEM 14
     "Author - Cesar Salto"
 
-    # Collects and validates names and evaluated values from bindings, then ensures all names are valid
+    """Collects and validates names and evaluated values from bindings, then ensures all names are valid"""
     while bindings is not nil:
         validate_form(bindings.first, 2, 2)
         names = Pair(bindings.first.first, names)
@@ -287,7 +287,7 @@ def do_mu_form(expressions, env):
     validate_formals(formals)
     # BEGIN PROBLEM 11
     """ Author: Cesar Salto """
-    # Returns a new MuProcedure with given formals and body expressions
+    """ Returns a new MuProcedure with given formals and body expressions"""
     return MuProcedure(formals, expressions.rest)
     # END PROBLEM 11
 
