@@ -11,7 +11,6 @@ class SchemeError(Exception):
 class Frame:
     """An environment frame binds Scheme symbols to Scheme values."""
 
-    "*** YOUR CODE HERE ***"
     def __init__(self, parent):
         """An empty frame with parent frame PARENT (which may be None)."""
         self.bindings = {}
@@ -26,13 +25,21 @@ class Frame:
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
         # BEGIN PROBLEM 1
+        """
+        Author: Joshua Wong
+        Following code simply adds symbol and value to the bindings dictionary of the current frame object.
+        """
         self.bindings.update({symbol: value})
         # END PROBLEM 1
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
-        # Author: Joshua Wong
         # BEGIN PROBLEM 1
+        """ 
+        Author: Joshua Wong
+        Following code retrieves value for a variable (symbol) defined in the frame.
+        Searches in the current environment, parent env, parent of env, etc.
+        """
         value = self.bindings.get(symbol)
         if value is not None:
             return value

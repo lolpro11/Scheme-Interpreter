@@ -100,15 +100,15 @@ def scheme_apply(procedure, args, env):
         # BEGIN PROBLEM 9
         """ Author: Mike Beitner 
          If a lambda procedure, a child frame of the current environment is made.
-         The body args are eval_all-ed"""
+         The body args are eval_all-ed. """
         new_frame = procedure.env.make_child_frame(procedure.formals, args)
         result = eval_all(procedure.body, new_frame) # call eval_all with new frame
         return result
         # END PROBLEM 9
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
-        "Author - Cesar Salto"
-        """Evaluates procedure body in a new child environment frame with bound arguments"""
+        """Author - Cesar Salto
+        Evaluates procedure body in a new child environment frame with bound arguments."""
         child = env.make_child_frame(procedure.formals, args)
         return eval_all(procedure.body, child)
         # END PROBLEM 11

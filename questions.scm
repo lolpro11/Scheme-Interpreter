@@ -4,6 +4,7 @@
 (define (cddr x) (cdr (cdr x)))
 
 ;; Problem 15
+;; author: Mike
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 15

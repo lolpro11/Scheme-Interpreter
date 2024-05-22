@@ -33,7 +33,6 @@ def do_define_form(expressions, env):
 
     from scheme_eval_apply import scheme_eval
 
-    """ The expression should be coming in as a Pair object."""
     try:
         validate_form(expressions, 2) # Checks that expressions is a list of length at least 2
         signature = expressions.first
@@ -41,14 +40,13 @@ def do_define_form(expressions, env):
     except Exception:
         pass
 
-    """ If the signature is a symbol... """
     if scheme_symbolp(signature):
         # assigning a name to a value e.g. (define x (+ 1 2))
         validate_form(expressions, 2, 2) # Checks that expressions is a list of length exactly 2
         # BEGIN PROBLEM 4
         """ 
         Author: Arshmeet Kaur
-        Define statement. 
+        The following code handles the logic of define statement. 
         1. Evaluate second operand to obtain value.
         2. Bind first operand (symbol) to that value."""
         result = scheme_eval(value, env)
@@ -58,7 +56,12 @@ def do_define_form(expressions, env):
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
-        """Author: Cesar Salto"""
+        """Author: Cesar Salto
+        Following code handles a named procedure. 
+        1. The function signature is the first element of the expressions pair.
+        The name is the first element of the function signature. 
+        The formal arguments are the second element of the signature. 
+        3. The body of the function is the second element of the expressions pair."""
         name = signature.first
         formals = signature.rest
         body = expressions.rest
@@ -81,7 +84,9 @@ def do_quote_form(expressions, env):
     >>> do_quote_form(read_line("((+ x 2))"), env) # evaluating (quote (+ x 2))
     Pair('+', Pair('x', Pair(2, nil)))
     """
-    # Author: Joshua Wong
+    """ Author: Joshua Wong
+    The quote form simply returns the firskt of the expressions passed in.
+    """
     validate_form(expressions, 1, 1);
     # BEGIN PROBLEM 5
     return expressions.first
@@ -110,6 +115,11 @@ def do_lambda_form(expressions, env):
     formals = expressions.first
     validate_formals(formals)
     # BEGIN PROBLEM 7
+    """
+    Author: Mike Beitner
+    To define a Lambda procedure, simply construct a LambdaProcedure from the extracted
+    formal parameters and the actual "body" (expressions.rest) with the current environment.
+    """
     return LambdaProcedure(formals, expressions.rest, env)
     # END PROBLEM 7
 
@@ -122,7 +132,6 @@ def do_if_form(expressions, env):
     >>> do_if_form(read_line("(#f (print 2) (print 3))"), env) # evaluating (if #f (print 2) (print 3))
     3
     """
-    # Author: Joshua Wong
     validate_form(expressions, 2, 3)
     if is_scheme_true(scheme_eval(expressions.first, env)):
         return scheme_eval(expressions.rest.first, env)
@@ -143,7 +152,11 @@ def do_and_form(expressions, env):
     4
     False
     """
-    # Author: Joshua Wong
+    """ Author: Joshua Wong
+    Evaluates an and form by traversing through the scheme list of expressions
+    and evaluating each to a true or false value
+    A false value returns out of the function.
+    """
     # BEGIN PROBLEM 12
     if expressions is nil:
         return True
@@ -169,6 +182,11 @@ def do_or_form(expressions, env):
     1
     2
     6
+    """
+    """ Author: Joshua Wong
+        Evaluates an and form by traversing through the scheme list of expressions
+        and evaluating each to a true or false value
+        A true value immediately returns out of the function.
     """
     # BEGIN PROBLEM 12
     if expressions is nil:
@@ -238,9 +256,10 @@ def make_let_frame(bindings, env):
         raise SchemeError('bad bindings list in let form')
     names = values = nil
     # BEGIN PROBLEM 14
-    "Author - Cesar Salto"
-
-    """Collects and validates names and evaluated values from bindings, then ensures all names are valid"""
+    """
+    Author - Cesar Salto
+    Collects and validates names and evaluated values from bindings
+    then ensures all names are valid. """
     while bindings is not nil:
         validate_form(bindings.first, 2, 2)
         names = Pair(bindings.first.first, names)
