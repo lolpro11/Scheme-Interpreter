@@ -1,0 +1,702 @@
+Last login: Tue May 21 21:00:55 on ttys003
+arshmeetkaur@Arshmeets-MacBook-Pro ~ % cd /Users/arshmeetkaur/Scheme-Interpreter
+arshmeetkaur@Arshmeets-MacBook-Pro Scheme-Interpreter % cd /Users/arshmeetkaur/Scheme-Interpreter
+arshmeetkaur@Arshmeets-MacBook-Pro Scheme-Interpreter % python3 scheme.py tests.scm              
+scm> 10
+10
+scm> (+ 137 349)
+486
+scm> (- 1000 334)
+666
+scm> (* 5 99)
+495
+scm> (/ 10 5)
+2
+scm> (+ 2.7 10)
+12.7
+scm> (+ 21 35 12 7)
+75
+scm> (* 25 4 12)
+1200
+scm> (+ (* 3 5) (- 10 6))
+19
+scm> (+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))
+57
+scm> (+ (* 3
+           (+ (* 2 4)
+              (+ 3 5)))
+        (+ (- 10 7)
+           6))
+57
+scm> (define size 2)
+size
+scm> size
+2
+scm> (* 5 size)
+10
+scm> (define pi 3.14159)
+pi
+scm> (define radius 10)
+radius
+scm> (* pi (* radius radius))
+314.159
+scm> (define circumference (* 2 pi radius))
+circumference
+scm> circumference
+62.8318
+scm> (define (square x) (* x x))
+square
+scm> (square 21)
+441
+scm> (define square (lambda (x) (* x x))) ; See Section 1.3.2
+square
+scm> (square 21)
+441
+scm> (square (+ 2 5))
+49
+scm> (square (square 3))
+81
+scm> (define (sum-of-squares x y)
+       (+ (square x) (square y)))
+sum-of-squares
+scm> (sum-of-squares 3 4)
+25
+scm> (define (f a)
+       (sum-of-squares (+ a 1) (* a 2)))
+f
+scm> (f 5)
+136
+scm> (define (abs x)
+       (cond ((> x 0) x)
+             ((= x 0) 0)
+             ((< x 0) (- x))))
+abs
+scm> (abs -3)
+3
+scm> (abs 0)
+0
+scm> (abs 3)
+3
+scm> (define (a-plus-abs-b a b)
+       ((if (> b 0) + -) a b))
+a-plus-abs-b
+scm> (a-plus-abs-b 3 -2)
+5
+scm> (define (sqrt-iter guess x)
+       (if (good-enough? guess x)
+           guess
+           (sqrt-iter (improve guess x)
+                      x)))
+sqrt-iter
+scm> (define (improve guess x)
+       (average guess (/ x guess)))
+improve
+scm> (define (average x y)
+       (/ (+ x y) 2))
+average
+scm> (define (good-enough? guess x)
+       (< (abs (- (square guess) x)) 0.001))
+good-enough?
+scm> (define (sqrt x)
+       (sqrt-iter 1.0 x))
+sqrt
+scm> (sqrt 9)
+3.00009155413138
+scm> (sqrt (+ 100 37))
+11.704699917758145
+scm> (sqrt (+ (sqrt 2) (sqrt 3)))
+1.7739279023207892
+scm> (square (sqrt 1000))
+1000.000369924366
+scm> (define (sqrt x)
+       (define (good-enough? guess)
+         (< (abs (- (square guess) x)) 0.001))
+       (define (improve guess)
+         (average guess (/ x guess)))
+       (define (sqrt-iter guess)
+         (if (good-enough? guess)
+             guess
+             (sqrt-iter (improve guess))))
+       (sqrt-iter 1.0))
+sqrt
+scm> (sqrt 9)
+3.00009155413138
+scm> (sqrt (+ 100 37))
+11.704699917758145
+scm> (sqrt (+ (sqrt 2) (sqrt 3)))
+1.7739279023207892
+scm> (square (sqrt 1000))
+1000.000369924366
+scm> (define (cube x) (* x x x))
+cube
+scm> (define (sum term a next b)
+       (if (> a b)
+           0
+           (+ (term a)
+              (sum term (next a) next b))))
+sum
+scm> (define (inc n) (+ n 1))
+inc
+scm> (define (sum-cubes a b)
+       (sum cube a inc b))
+sum-cubes
+scm> (sum-cubes 1 10)
+3025
+scm> (define (identity x) x)
+identity
+scm> (define (sum-integers a b)
+       (sum identity a inc b))
+sum-integers
+scm> (sum-integers 1 10)
+55
+scm> ((lambda (x y z) (+ x y (square z))) 1 2 3)
+12
+scm> (define (f x y)
+       (let ((a (+ 1 (* x y)))
+             (b (- 1 y)))
+         (+ (* x (square a))
+            (* y b)
+            (* a b))))
+f
+scm> (f 3 4)
+456
+scm> (define x 5)
+x
+scm> (+ (let ((x 3))
+          (+ x (* x 10)))
+        x)
+38
+scm> (let ((x 3)
+           (y (+ x 2)))
+       (* x y))
+21
+scm> (define (add-rat x y)
+       (make-rat (+ (* (numer x) (denom y))
+                    (* (numer y) (denom x)))
+                 (* (denom x) (denom y))))
+add-rat
+scm> (define (sub-rat x y)
+       (make-rat (- (* (numer x) (denom y))
+                    (* (numer y) (denom x)))
+                 (* (denom x) (denom y))))
+sub-rat
+scm> (define (mul-rat x y)
+       (make-rat (* (numer x) (numer y))
+                 (* (denom x) (denom y))))
+mul-rat
+scm> (define (div-rat x y)
+       (make-rat (* (numer x) (denom y))
+                 (* (denom x) (numer y))))
+div-rat
+scm> (define (equal-rat? x y)
+       (= (* (numer x) (denom y))
+          (* (numer y) (denom x))))
+equal-rat?
+scm> (define x (cons 1 (cons 2 nil)))
+x
+scm> (car x)
+1
+scm> (cdr x)
+(2)
+scm> (define x (list 1 2))
+x
+scm> (define y (list 3 4))
+y
+scm> (define z (cons x y))
+z
+scm> (car (car z))
+1
+scm> (car (cdr z))
+3
+scm> z
+((1 2) 3 4)
+scm> (define (make-rat n d) (list n d))
+make-rat
+scm> (define (numer x) (car x))
+numer
+scm> (define (denom x) (car (cdr x)))
+denom
+scm> (define (print-rat x)
+       (display (numer x))
+       (display '/)
+       (display (denom x))
+       (newline))
+print-rat
+scm> (define one-half (make-rat 1 2))
+one-half
+scm> (print-rat one-half)
+1/2
+scm> (define one-third (make-rat 1 3))
+one-third
+scm> (print-rat (add-rat one-half one-third))
+5/6
+scm> (print-rat (mul-rat one-half one-third))
+1/6
+scm> (print-rat (add-rat one-third one-third))
+6/9
+scm> (define (gcd a b)
+       (if (= b 0)
+           a
+           (gcd b (remainder a b))))
+gcd
+scm> (define (make-rat n d)
+       (let ((g (gcd n d)))
+         (list (/ n g) (/ d g))))
+make-rat
+scm> (print-rat (add-rat one-third one-third))
+2/3
+scm> (define one-through-four (list 1 2 3 4))
+one-through-four
+scm> one-through-four
+(1 2 3 4)
+scm> (car one-through-four)
+1
+scm> (cdr one-through-four)
+(2 3 4)
+scm> (car (cdr one-through-four))
+2
+scm> (cons 10 one-through-four)
+(10 1 2 3 4)
+scm> (cons 5 one-through-four)
+(5 1 2 3 4)
+scm> (define (map proc items)
+       (if (null? items)
+           nil
+           (cons (proc (car items))
+                 (map proc (cdr items)))))
+map
+scm> (map abs (list -10 2.5 -11.6 17))
+(10 2.5 11.6 17)
+scm> (map (lambda (x) (* x x))
+          (list 1 2 3 4))
+(1 4 9 16)
+scm> (define (scale-list items factor)
+       (map (lambda (x) (* x factor))
+            items))
+scale-list
+scm> (scale-list (list 1 2 3 4 5) 10)
+(10 20 30 40 50)
+scm> (define (count-leaves x)
+       (cond ((null? x) 0)
+             ((not (pair? x)) 1)
+             (else (+ (count-leaves (car x))
+                      (count-leaves (cdr x))))))
+count-leaves
+scm> (define x (cons (list 1 2) (list 3 4)))
+x
+scm> (count-leaves x)
+4
+scm> (count-leaves (list x x))
+8
+scm> (define (odd? x) (= 1 (remainder x 2)))
+odd?
+scm> (define (filter predicate sequence)
+       (cond ((null? sequence) nil)
+             ((predicate (car sequence))
+              (cons (car sequence)
+                    (filter predicate (cdr sequence))))
+             (else (filter predicate (cdr sequence)))))
+filter
+scm> (filter odd? (list 1 2 3 4 5))
+(1 3 5)
+scm> (define (accumulate op initial sequence)
+       (if (null? sequence)
+           initial
+           (op (car sequence)
+               (accumulate op initial (cdr sequence)))))
+accumulate
+scm> (accumulate + 0 (list 1 2 3 4 5))
+15
+scm> (accumulate * 1 (list 1 2 3 4 5))
+120
+scm> (accumulate cons nil (list 1 2 3 4 5))
+(1 2 3 4 5)
+scm> (define (enumerate-interval low high)
+       (if (> low high)
+           nil
+           (cons low (enumerate-interval (+ low 1) high))))
+enumerate-interval
+scm> (enumerate-interval 2 7)
+(2 3 4 5 6 7)
+scm> (define (enumerate-tree tree)
+       (cond ((null? tree) nil)
+             ((not (pair? tree)) (list tree))
+             (else (append (enumerate-tree (car tree))
+                           (enumerate-tree (cdr tree))))))
+enumerate-tree
+scm> (enumerate-tree (list 1 (list 2 (list 3 4)) 5))
+(1 2 3 4 5)
+scm> (define a 1)
+a
+scm> (define b 2)
+b
+scm> (list a b)
+(1 2)
+scm> (list 'a 'b)
+(a b)
+scm> (list 'a b)
+(a 2)
+scm> (car '(a b c))
+a
+scm> (cdr '(a b c))
+(b c)
+scm> (define (memq item x)
+       (cond ((null? x) #f)
+             ((equal? item (car x)) x)
+             (else (memq item (cdr x)))))
+memq
+scm> (memq 'apple '(pear banana prune))
+#f
+scm> (memq 'apple '(x (apple sauce) y apple pear))
+(apple pear)
+scm> (define (my-equal? x y)
+       (cond ((pair? x) (and (pair? y)
+                             (my-equal? (car x) (car y))
+                             (my-equal? (cdr x) (cdr y))))
+             ((null? x) (null? y))
+             (else (equal? x y))))
+my-equal?
+scm> (my-equal? '(1 2 (three)) '(1 2 (three)))
+#t
+scm> (my-equal? '(1 2 (three)) '(1 2 three))
+#f
+scm> (my-equal? '(1 2 three) '(1 2 (three)))
+#f
+scm> (define double (lambda (x) (* 2 x)))
+double
+scm> (double 5)
+10
+scm> (define compose (lambda (f g) (lambda (x) (f (g x)))))
+compose
+scm> ((compose list double) 5)
+(10)
+scm> (define apply-twice (lambda (f) (compose f f)))
+apply-twice
+scm> ((apply-twice double) 5)
+20
+scm> ((apply-twice (apply-twice double)) 5)
+80
+scm> (define fact (lambda (n) (if (<= n 1) 1 (* n (fact (- n 1))))))
+fact
+scm> (fact 3)
+6
+scm> (fact 50)
+30414093201713378043612608166064768844377641568960512000000000000
+scm> (define (combine f)
+       (lambda (x y)
+         (if (null? x) nil
+           (f (list (car x) (car y))
+              ((combine f) (cdr x) (cdr y))))))
+combine
+scm> (define zip (combine cons))
+zip
+scm> (zip (list 1 2 3 4) (list 5 6 7 8))
+((1 5) (2 6) (3 7) (4 8))
+scm> (define riff-shuffle (lambda (deck) (begin
+         (define take (lambda (n seq) (if (<= n 0) (quote ()) (cons (car seq) (take (- n 1) (cdr seq))))))
+         (define drop (lambda (n seq) (if (<= n 0) seq (drop (- n 1) (cdr seq)))))
+         (define mid (lambda (seq) (/ (length seq) 2)))
+         ((combine append) (take (mid deck) deck) (drop (mid deck) deck)))))
+riff-shuffle
+scm> (riff-shuffle (list 1 2 3 4 5 6 7 8))
+(1 5 2 6 3 7 4 8)
+scm> ((apply-twice riff-shuffle) (list 1 2 3 4 5 6 7 8))
+(1 3 5 7 2 4 6 8)
+scm> (riff-shuffle (riff-shuffle (riff-shuffle (list 1 2 3 4 5 6 7 8))))
+(1 2 3 4 5 6 7 8)
+scm> (apply square '(2))
+4
+scm> (apply + '(1 2 3 4))
+10
+scm> (apply (if #f + append) '((1 2) (3 4)))
+(1 2 3 4)
+scm> (if 0 1 2)
+1
+scm> (if '() 1 2)
+1
+scm> (or #f #t)
+#t
+scm> (or)
+#f
+scm> (and)
+#t
+scm> (or 1 2 3)
+1
+scm> (and 1 2 3)
+3
+scm> (and #f (/ 1 0))
+#f
+scm> (and #t (/ 1 0))
+Error: division by zero
+scm> (or 3 (/ 1 0))
+3
+scm> (or #f (/ 1 0))
+Error: division by zero
+scm> (or (quote hello) (quote world))
+hello
+scm> (if nil 1 2)
+1
+scm> (if 0 1 2)
+1
+scm> (if (or #f #f #f) 1 2)
+2
+scm> (define (loop) (loop))
+loop
+scm> (cond (#f (loop))
+           (12))
+12
+scm> ((lambda (x) (display x) (newline) x) 2)
+2
+2
+scm> (let ((x 2)) ((begin (define x (+ x 1)) +) 3 (begin (define x (+ x 1)) x)))
+7
+scm> (define (len s)
+       (if (eq? s '())
+         0
+         (+ 1 (len (cdr s)))))
+len
+scm> (len '(1 2 3 4))
+4
+scm> (begin 1)
+1
+scm> (begin 1 2)
+2
+scm> (define x (begin (print 1) 2))
+1
+x
+scm> x
+2
+scm> (define x 2)
+x
+scm> x
+2
+scm> (define x (+ 2 8))
+x
+scm> x
+10
+scm> (define (f x) (+ x 2))
+f
+scm> (f 3)
+5
+scm> (quote (+ x 2))
+(+ x 2)
+scm> (lambda (x) (+ x 2))
+(lambda (x) (+ x 2))
+scm> (if #t (print 2) (print 3))
+2
+scm> (if #f (print 2) (print 3))
+3
+scm> (and #f (print 1))
+#f
+scm> (and (print 1) (print 2) (print 3) (print 4) 3 #f)
+1
+2
+3
+4
+#f
+scm> (or 10 (print 1))
+10
+scm> (or #f 2 3 #t #f)
+2
+scm> (cond (#f (print 2)) (#t (print 3)))
+3
+scm> (let ((x 2) (y 3)) (+ x y))
+5
+scm> (exit)
+
+arshmeetkaur@Arshmeets-MacBook-Pro Scheme-Interpreter % python3 scheme.py questions.scm          
+scm> (define (caar x) (car (car x)))
+caar
+scm> (define (cadr x) (car (cdr x)))
+cadr
+scm> (define (cdar x) (cdr (car x)))
+cdar
+scm> (define (cddr x) (cdr (cdr x)))
+cddr
+scm> (define (enumerate s)
+       (cond ((null? s) '()) ; empty list if null
+             (else (cons (cons (length (cdr s)) (car s)) ; if not empty, cons(create a pair) of length of rest of
+                          (enumerate (cdr s))))) ; recursive; do it for the rest of the elements in s
+       )
+enumerate
+scm> (define (merge ordered? s1 s2)
+       (cond ((null? s1) s2) ; If s1 is empty, return s2.
+             ((null? s2) s1) ; If s2 is empty, return s1.
+             ((ordered? (car s1) (car s2)) (cons (car s1) (cons (car s2) (merge ordered? (cdr s1) (cdr s2)))))
+             ((ordered? (car s2) (car s1)) (cons (car s2) (cons (car s1) (merge ordered? (cdr s1) (cdr s2)))))
+       )
+     )
+merge
+scm> (define (check-special form)
+       (lambda (expr) (equal? form (car expr))))
+check-special
+scm> (define lambda? (check-special 'lambda))
+lambda?
+scm> (define define? (check-special 'define))
+define?
+scm> (define quoted? (check-special 'quote))
+quoted?
+scm> (define let?    (check-special 'let))
+let?
+scm> (define (let-to-lambda expr)
+       (cond ((atom? expr)
+              'replace-this-line
+              )
+             ((quoted? expr)
+              'replace-this-line
+              )
+             ((or (lambda? expr)
+                  (define? expr))
+              (let ((form   (car expr))
+                    (params (cadr expr))
+                    (body   (cddr expr)))
+                'replace-this-line
+                ))
+             ((let? expr)
+              (let ((values (cadr expr))
+                    (body   (cddr expr)))
+                'replace-this-line
+                ))
+             (else
+              'replace-this-line
+              )))
+let-to-lambda
+scm> (define (zip pairs)
+       'replace-this-line)
+zip
+scm> (enumerate '(3 4 5 6))
+((3 . 3) (2 . 4) (1 . 5) (0 . 6))
+scm> (enumerate '())
+()
+scm> (merge < '(1 4 6) '(2 5 8))
+(1 2 4 5 6 8)
+scm> (merge > '(6 4 1) '(8 5 2))
+(8 6 5 4 2 1)
+scm> (merge < '(1) '(2 3 5))
+(1 2 3 5)
+
+arshmeetkaur@Arshmeets-MacBook-Pro Scheme-Interpreter % python3 scheme.py canvas_test.scm        
+scm> +
+#[+]
+scm> odd?
+#[odd?]
+scm> (+ 1 2)
+3
+scm> (* 3 4 (- 5 2) 1)
+36
+scm> (odd? 31)
+#t
+scm> (define a (+ 2 3))  ; Binds the symbol a to the value of (+ 2 3)
+a
+scm> (define (foo x) x)  ; Creates a procedure and binds it to the symbol foo
+foo
+scm> (define x 15)
+x
+scm> (define y (* 2 x))
+y
+scm> y
+30
+scm> (define n 0)
+n
+scm> ((define n (+ n 1)) 2)
+Error: str is not callable: n
+scm> n
+1
+scm> (quote hello)
+hello
+scm> '(cons 1 2)  ; Equivalent to (quote (cons 1 2))
+(cons 1 2)
+scm> (quote a)
+a
+scm> (quote (1 2))
+(1 2)
+scm> (quote (1 (2 three (4 5))))
+(1 (2 three (4 5)))
+scm> (car (quote (a b)))
+a
+scm> 'hello
+hello
+scm> '(1 2)
+(1 2)
+scm> '(1 (2 three (4 5)))
+(1 (2 three (4 5)))
+scm> (car '(a b))
+a
+scm> (eval (cons 'car '('(1 2))))
+1
+scm> (eval (define tau 6.28))
+6.28
+scm> (eval 'tau)
+6.28
+scm> tau
+6.28
+scm> (begin (+ 2 3) (+ 5 6))
+11
+scm> (define x (begin (display 3) (newline) (+ 2 3)))
+3
+x
+scm> (+ x 3)
+8
+scm> (begin (print 3) '(+ 2 3))
+3
+(+ 2 3)
+scm> (lambda (x y) (+ x y))
+(lambda (x y) (+ x y))
+scm> (define f (lambda (x) (* x 2)))
+f
+scm> (define (f x) (* x 2))
+f
+scm> (define (g y) (print y) (+ y 1))
+g
+scm> (g 3)
+3
+4
+scm> (define f (mu () (* a b)))
+f
+scm> (define g (lambda () (define a 4) (define b 5) (f)))
+g
+scm> (g)
+20
+scm> (and)
+#t
+scm> (and 4 5 6)  ; all operands are true values
+6
+scm> (and 4 5 (+ 3 3))
+6
+scm> (and #t #f 42 (/ 1 0))  ; short-circuiting behavior of and
+#f
+scm> (or)
+#f
+scm> (or 5 2 1)  ; 5 is a true value
+5
+scm> (or #f (- 1 1) 1)  ; 0 is a true value in Scheme
+0
+scm> (or 4 #t (/ 1 0))  ; short-circuiting behavior of or
+4
+scm> (cond ((= 4 3) 'nope)
+                ((= 4 4) 'hi)
+                (else 'wait))
+hi
+scm> (cond ((= 4 3) 'wat)
+                ((= 4 4))
+                (else 'hm))
+#t
+scm> (cond ((= 4 4) 'here (+ 40 2))
+                (else 'wat 0))
+42
+scm> (cond (False 1) (False 2))
+scm> (cond (else))
+#t
+scm> (define x 5)
+x
+scm> (define y 'bye)
+y
+scm> (let ((x 42)
+                (y (* x 10)))  ; this x refers to the global value of x, not 42
+            (list x y))
+(42 50)
+scm> (list x y)
+(5 bye)
+scm> (exit)
+
+arshmeetkaur@Arshmeets-MacBook-Pro Scheme-Interpreter % 
